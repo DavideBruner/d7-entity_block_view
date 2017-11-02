@@ -1,0 +1,14 @@
+name = Entity Block View
+description = Module to manage entities information blocks
+package = Project
+core = 7.x
+
+files[] = plugins/bean/EntityBlockView.php
+
+dependencies[] = bean
+dependencies[] = bean_admin_ui
+
+less[vars][@primary_color] = #2998d0
+less[vars][@secondary_color] = #797979
+
+less[sheets][] = style/entity_block_view.less

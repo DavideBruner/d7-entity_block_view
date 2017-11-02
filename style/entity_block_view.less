@@ -1,0 +1,42 @@
+@primary_color : #2998d0;
+@secondary_color : #797979;
+
+.block.block-bean {
+  text-align: left;
+  text-transform: uppercase;
+
+  .block-title {
+    color: @primary_color;
+  }
+
+  table {
+    border: 2px solid @primary_color;
+
+    thead {
+      background: inherit;
+      tr {
+        th {
+          color: @secondary_color;
+          font-weight: normal;
+          border-bottom: none;
+          padding-bottom: 0;
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        background: transparent;
+        &:hover {
+          background: #f9f9f9;
+        }
+        td {
+          border: none;
+          font-weight: bold;
+          padding-bottom: 10px;
+        }
+      }
+    }
+  }
+
+}

@@ -1,0 +1,78 @@
+<?php
+
+/**
+ * Include Bean utility function to load and render entity blocks
+ */
+module_load_include('inc','entity_block_view', 'entity_block_view.bean');
+
+/**
+ * Implements hook_bean_types_api_info().
+ */
+function entity_block_view_bean_types_api_info() {
+  return array('api' => 4);
+}
+
+/**
+ * Implements hook_bean_types().
+ */
+function entity_block_view_bean_types() {
+  $plugins = array();
+  $plugins['entity_block_view'] = array(
+    'label' => t('Entity Block View'),
+    'description' => t('Display the current entity or a specific entity using the selected view mode.'),
+    // @todo: Implement custom caching logic.
+    'handler' => array(
+      'class' => 'EntityBlockView',
+      'parent' => 'bean',
+      'path' => drupal_get_path('module', 'entity_block_view') . '/plugins/bean',
+      'file' => 'EntityBlockView.php',
+    ),
+  );
+  return $plugins;
+}
+
+/**
+ * Implements hook_entity_info_alter().
+ */
+function entity_block_view_entity_info_alter(&$entity_info) {
+  foreach ($entity_info as $entity_type => $entity) {
+    $entity_info[$entity_type]['view modes']['table'] = array(
+      'label' => t('Table'),
+      'custom settings' => TRUE,
+    );
+  }
+}
+
+/**
+ * Implements hook_entity_view().
+ */
+function entity_block_view_entity_view($entity, $type, $view_mode, $langcode) {
+  if($view_mode == 'table') {
+    $row = NULL;
+    $header = array();
+    $content = (array) $entity->content;
+
+    //@TODO implement a better way to include custom styles
+    $style = drupal_get_path('module', 'entity_block_view') . '/style/entity_block_view.css';
+    drupal_add_css($style);
+
+    foreach (element_children($content, TRUE) as $field_name) {
+      $field = $content[$field_name];
+      $header[] = isset($field['#title']) ? $field['#title'] : '';
+      $row[] = render($field);
+    }
+
+    $uri = entity_uri($type, $entity);
+
+    $rows = array($row);
+
+    $entity->content += array(
+      '#theme' => 'table',
+      '#header' => $header,
+      '#rows' => $rows,
+      '#language'  => LANGUAGE_NONE,
+      '#empty' => t('No fields available. ') . l('Add fields', $uri['path']),
+    );
+
+  }
+}

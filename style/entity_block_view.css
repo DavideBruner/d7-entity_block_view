@@ -1,0 +1,30 @@
+.block.block-bean {
+  text-align: left;
+  text-transform: uppercase;
+}
+.block.block-bean .block-title {
+  color: #2998d0;
+}
+.block.block-bean table {
+  border: 2px solid #2998d0;
+}
+.block.block-bean table thead {
+  background: inherit;
+}
+.block.block-bean table thead tr th {
+  color: #797979;
+  font-weight: normal;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.block.block-bean table tbody tr {
+  background: transparent;
+}
+.block.block-bean table tbody tr:hover {
+  background: #f9f9f9;
+}
+.block.block-bean table tbody tr td {
+  border: none;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
